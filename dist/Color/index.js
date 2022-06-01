@@ -71,13 +71,15 @@ class Color {
         }
         return (this._labColor.a === otherColor._labColor.a &&
             this._labColor.b === otherColor._labColor.b &&
-            this._labColor.l === otherColor._labColor.l);
+            this._labColor.l === otherColor._labColor.l &&
+            this._alpha === otherColor._alpha);
     }
     toPortableString() {
         const obj = {
             l: this._labColor.l,
             a: this._labColor.a,
             b: this._labColor.b,
+            alpha: this._alpha.toNumber(1),
         };
         return JSON.stringify(obj);
     }
