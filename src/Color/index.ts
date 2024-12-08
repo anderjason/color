@@ -60,8 +60,9 @@ interface PortableColor {
 }
 
 export class Color {
+  readonly alpha: Percent;
+
   private _labColor: LabColor;
-  private _alpha: Percent;
   private _hexString: string | undefined;
 
   static isEqual(a: Color, b: Color): boolean {
@@ -132,7 +133,7 @@ export class Color {
 
   private constructor(labColor: LabColor, alpha: Percent) {
     this._labColor = labColor;
-    this._alpha = alpha;
+    this.alpha = alpha;
   }
 
   isEqual(otherColor: Color): boolean {
@@ -144,7 +145,7 @@ export class Color {
       this._labColor.a === otherColor._labColor.a &&
       this._labColor.b === otherColor._labColor.b &&
       this._labColor.l === otherColor._labColor.l &&
-      this._alpha === otherColor._alpha
+      this.alpha === otherColor.alpha
     );
   }
 
@@ -153,7 +154,7 @@ export class Color {
       l: this._labColor.l,
       a: this._labColor.a,
       b: this._labColor.b,
-      alpha: this._alpha.toNumber(1),
+      alpha: this.alpha.toNumber(1),
     };
 
     return JSON.stringify(obj);
@@ -168,7 +169,7 @@ export class Color {
         a,
         b,
       },
-      this._alpha
+      this.alpha
     );
   }
 
@@ -191,7 +192,7 @@ export class Color {
           })
         )
       ),
-      this._alpha
+      this.alpha
     );
   }
 
@@ -213,7 +214,7 @@ export class Color {
   withSaturation(absoluteSaturation: Percent): Color {
     let { l, h } = hclGivenLab(this._labColor);
 
-    return new Color(labGivenHcl({ h, c: absoluteSaturation, l }), this._alpha);
+    return new Color(labGivenHcl({ h, c: absoluteSaturation, l }), this.alpha);
   }
 
   withRelativeSaturation(relativeSaturation: Percent): Color {
@@ -243,7 +244,7 @@ export class Color {
 
   toHexString(): string {
     if (this._hexString == null) {
-      this._hexString = hexGivenRgb(this.toRgbFloatColor(), this._alpha);
+      this._hexString = hexGivenRgb(this.toRgbFloatColor(), this.alpha);
     }
 
     return this._hexString;
@@ -262,7 +263,7 @@ export class Color {
   }
 
   toRgbString(): string {
-    return rgbStringGivenRgbFloat(this.toRgbFloatColor(), this._alpha);
+    return rgbStringGivenRgbFloat(this.toRgbFloatColor(), this.alpha);
   }
 
   toHslColor(): HslColor {

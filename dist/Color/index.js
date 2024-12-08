@@ -21,7 +21,7 @@ const distanceGivenColors_1 = require("./_internal/distanceGivenColors");
 class Color {
     constructor(labColor, alpha) {
         this._labColor = labColor;
-        this._alpha = alpha;
+        this.alpha = alpha;
     }
     static isEqual(a, b) {
         if (a == null && b == null) {
@@ -72,14 +72,14 @@ class Color {
         return (this._labColor.a === otherColor._labColor.a &&
             this._labColor.b === otherColor._labColor.b &&
             this._labColor.l === otherColor._labColor.l &&
-            this._alpha === otherColor._alpha);
+            this.alpha === otherColor.alpha);
     }
     toPortableString() {
         const obj = {
             l: this._labColor.l,
             a: this._labColor.a,
             b: this._labColor.b,
-            alpha: this._alpha.toNumber(1),
+            alpha: this.alpha.toNumber(1),
         };
         return JSON.stringify(obj);
     }
@@ -89,7 +89,7 @@ class Color {
             l: absoluteLightness * 100,
             a,
             b,
-        }, this._alpha);
+        }, this.alpha);
     }
     withRelativeLightness(relativeLightness) {
         const { l } = this._labColor;
@@ -101,7 +101,7 @@ class Color {
             h: absoluteHue,
             s,
             l,
-        }))), this._alpha);
+        }))), this.alpha);
     }
     withRelativeHue(relativeHue) {
         const { h } = hslGivenRgbFloat_1.hslGivenRgbFloat(this.toRgbFloatColor());
@@ -116,7 +116,7 @@ class Color {
     }
     withSaturation(absoluteSaturation) {
         let { l, h } = hclGivenLab_1.hclGivenLab(this._labColor);
-        return new Color(labGivenHcl_1.labGivenHcl({ h, c: absoluteSaturation, l }), this._alpha);
+        return new Color(labGivenHcl_1.labGivenHcl({ h, c: absoluteSaturation, l }), this.alpha);
     }
     withRelativeSaturation(relativeSaturation) {
         const hcl = hclGivenLab_1.hclGivenLab(this._labColor);
@@ -135,7 +135,7 @@ class Color {
     }
     toHexString() {
         if (this._hexString == null) {
-            this._hexString = hexGivenRgb_1.hexGivenRgb(this.toRgbFloatColor(), this._alpha);
+            this._hexString = hexGivenRgb_1.hexGivenRgb(this.toRgbFloatColor(), this.alpha);
         }
         return this._hexString;
     }
@@ -150,7 +150,7 @@ class Color {
         return rgbFloatGivenXyz_1.rgbFloatGivenXyz(xyzGivenLab_1.xyzGivenLab(this._labColor));
     }
     toRgbString() {
-        return rgbStringGivenRgbFloat_1.rgbStringGivenRgbFloat(this.toRgbFloatColor(), this._alpha);
+        return rgbStringGivenRgbFloat_1.rgbStringGivenRgbFloat(this.toRgbFloatColor(), this.alpha);
     }
     toHslColor() {
         return hslGivenRgbFloat_1.hslGivenRgbFloat(this.toRgbFloatColor());

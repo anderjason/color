@@ -30,8 +30,8 @@ export interface XyzColor {
     z: number;
 }
 export declare class Color {
+    readonly alpha: Percent;
     private _labColor;
-    private _alpha;
     private _hexString;
     static isEqual(a: Color, b: Color): boolean;
     static givenHslFloat(hslColor: HslColor, alpha?: Percent): Color;
